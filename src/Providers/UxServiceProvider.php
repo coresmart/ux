@@ -19,7 +19,7 @@ class UxServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        // $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'ux');
 
         $this->publishes([__DIR__ . '/../../config/ux.php' => config_path('ux.php')], ['ux', 'ux:config']);
