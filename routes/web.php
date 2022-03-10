@@ -5,6 +5,8 @@ use Illuminate\Support\Str;
 use Livewire\Commands\ComponentParser;
 use Symfony\Component\Finder\Finder;
 
+/*
+
 Route::middleware('web')->group(function () {
     $path = ComponentParser::generatePathFromNamespace(config('livewire.class_namespace'));
     $namespace = app()->getNamespace();
@@ -25,3 +27,5 @@ Route::middleware('web')->group(function () {
         }
     }
 });
+
+*/
