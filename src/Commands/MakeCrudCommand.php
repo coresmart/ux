@@ -53,12 +53,14 @@ class MakeCrudCommand extends Command
         $prefix = Str::replaceLast('.index', '', $this->componentParser->viewName());
         $title = preg_replace('/(.)(?=[A-Z])/u', '$1 ', $this->modelParser->className());
         $titles = Str::plural($title);
+        $routePrefix = Str::replace('.', '/', $prefix);
+        $prefix = Str::replaceFirst(".livewire.","",$prefix);
 
         $this->replaces = [
             'DummyComponentNamespace' => $this->componentParser->classNamespace(),
             'DummyModelNamespace' => $this->modelParser->classNamespace(),
             'DummyModelClass' => $this->modelParser->className(),
-            'dummy-route-uri' => Str::replace('.', '/', $prefix),
+            'dummy-route-uri' => $routePrefix,
             'dummy.prefix' => $prefix,
             'dummyModelVariables' => Str::camel($titles),
             'dummyModelVariable' => Str::camel($title),
@@ -71,13 +73,16 @@ class MakeCrudCommand extends Command
     private function makeStubs()
     {
         $viewDir = Str::replace(base_path() . DIRECTORY_SEPARATOR, '', dirname($this->componentParser->viewPath()));
-        dump($this->replaces);
-        dd($viewDir);
+        $viewDir = Str::replace('.','/',$viewDir);
+        // dump($this->replaces);
+        // dd($viewDir);
+
         $stubs = config('ux.stub_path') . '/crud';
 
         foreach ($this->filesystem->allFiles($stubs) as $stub) {
             $classDir = Str::replace(base_path() . DIRECTORY_SEPARATOR, '', dirname($this->componentParser->classPath()));
             $viewDir = Str::replace(base_path() . DIRECTORY_SEPARATOR, '', dirname($this->componentParser->viewPath()));
+            $viewDir = Str::replace('.','/',$viewDir);
             $path = Str::replace(['components', 'views'], [$classDir, $viewDir], $stub->getRelativePathname());
             $contents = Str::replace(array_keys($this->replaces), $this->replaces, $this->filesystem->get($stub));
 
