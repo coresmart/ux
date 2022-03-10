@@ -70,6 +70,9 @@ class MakeCrudCommand extends Command
 
     private function makeStubs()
     {
+        $viewDir = Str::replace(base_path() . DIRECTORY_SEPARATOR, '', dirname($this->componentParser->viewPath()));
+        dump($this->replaces);
+        dd($viewDir);
         $stubs = config('ux.stub_path') . '/crud';
 
         foreach ($this->filesystem->allFiles($stubs) as $stub) {
